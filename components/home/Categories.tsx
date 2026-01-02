@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { cn, formatCurrency, formatPercentage } from '@/lib/utils';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import { CategoriesFallback } from './fallback';
+import MotionSection from '@/components/MotionSection';
 
 const Categories = async () => {
   try {
@@ -52,16 +53,18 @@ const Categories = async () => {
     ];
 
     return (
-      <div id="categories" className="custom-scrollbar">
-        <h4>Top Categories</h4>
+      <MotionSection className="w-full" delay={0.2}>
+        <div id="categories" className="custom-scrollbar">
+          <h4>Top Categories</h4>
 
-        <DataTable
-          columns={columns}
-          data={categories?.slice(0, 10)}
-          rowKey={(_, index) => index}
-          tableClassName="mt-3"
-        />
-      </div>
+          <DataTable
+            columns={columns}
+            data={categories?.slice(0, 10)}
+            rowKey={(_, index) => index}
+            tableClassName="mt-3"
+          />
+        </div>
+      </MotionSection>
     );
   } catch (error) {
     console.error('Error fetching categories:', error);

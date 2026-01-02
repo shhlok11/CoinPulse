@@ -147,6 +147,9 @@
   }
   body {
     @apply bg-dark-700 text-foreground;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(118, 218, 68, 0.12), transparent 55%),
+      radial-gradient(900px 500px at 90% -10%, rgba(27, 37, 75, 0.35), transparent 60%);
   }
 }
 
@@ -176,7 +179,7 @@
   }
 
   header {
-    @apply border-b border-dark-400 h-20;
+    @apply border-b border-dark-400 h-20 sticky top-0 z-50 bg-dark-900/70 backdrop-blur;
 
     .inner {
       @apply flex justify-between items-center h-full;
@@ -200,18 +203,23 @@
           @apply max-sm:hidden;
         }
       }
+
+    }
+
+    .logo {
+      @apply h-10 w-auto;
     }
   }
 
   #candlestick-chart {
-    @apply p-3 mt-5 rounded-lg bg-dark-500;
+    @apply p-3 mt-5 rounded-xl bg-dark-500 border border-white/5 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.8)];
 
     .chart-header {
-      @apply flex flex-col gap-3 xl:flex-row xl:items-center mb-4 font-semibold text-[#e6eef8] text-[20px];
+      @apply flex flex-col gap-3 xl:flex-row xl:flex-wrap xl:items-center mb-4 font-semibold text-[#e6eef8] text-[20px];
     }
 
     .button-group {
-      @apply flex gap-1 xl:gap-2 items-center;
+      @apply flex gap-1 xl:gap-2 items-center flex-wrap max-w-full;
     }
 
     .config-button {
@@ -228,7 +236,7 @@
   }
 
   #coin-card {
-    @apply bg-dark-500 hover:bg-dark-400/50 transition-all rounded-lg p-5 border border-purple-600/20 hover:border-purple-600/50 cursor-pointer h-fit;
+    @apply bg-dark-500/90 hover:bg-dark-400/60 transition-all rounded-xl p-5 border border-white/10 hover:border-purple-600/50 cursor-pointer h-fit shadow-[0_20px_40px_-30px_rgba(0,0,0,0.75)];
 
     .header {
       @apply flex gap-3 mb-4;
@@ -276,7 +284,7 @@
   }
 
   #categories {
-    @apply pt-8 mt-5 w-full bg-dark-500 rounded-xl overflow-hidden;
+    @apply pt-8 mt-5 w-full bg-dark-500/90 rounded-xl overflow-hidden border border-white/5 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.8)];
 
     h4 {
       @apply text-xl md:text-2xl font-semibold mb-2 pl-5;
@@ -312,14 +320,14 @@
   }
 
   #trending-coins {
-    @apply w-full flex flex-col justify-center h-full py-4 bg-dark-500 rounded-xl;
+    @apply w-full flex flex-col justify-center h-full py-4 bg-dark-500/90 rounded-xl border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
     h4 {
       @apply text-xl md:text-2xl font-semibold mb-2 px-5;
     }
 
     .trending-coins-table {
-      @apply bg-dark-500 overflow-hidden;
+      @apply bg-dark-500/90 overflow-hidden border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
       .name-cell {
         @apply font-bold;
@@ -355,8 +363,69 @@
     @apply grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 items-start lg:items-center gap-6;
   }
 
+  .crypto-chatbot {
+    @apply w-full bg-dark-500/80 rounded-2xl px-6 py-6 border border-white/10 space-y-5 relative overflow-hidden;
+    background: radial-gradient(
+      120% 140% at 0% 0%,
+      rgba(46, 190, 123, 0.18) 0%,
+      rgba(26, 32, 39, 0.9) 35%,
+      rgba(15, 19, 22, 0.95) 100%
+    );
+    box-shadow:
+      0 0 40px rgba(46, 190, 123, 0.12),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+
+    .chat-header {
+      @apply flex items-start justify-between gap-4;
+
+      h4 {
+        @apply text-2xl md:text-3xl font-semibold text-white;
+      }
+
+      .subtitle {
+        @apply text-sm text-purple-100/70 mt-2 max-w-xl;
+      }
+
+      .badge {
+        @apply text-xs uppercase tracking-[0.2em] text-green-300 border border-green-400/40 rounded-full px-4 py-1.5;
+      }
+    }
+
+    .chat-window {
+      @apply bg-dark-700/60 rounded-xl p-4 space-y-3 max-h-72 overflow-y-auto border border-white/5;
+    }
+
+    .chat-bubble {
+      @apply text-sm leading-relaxed px-4 py-3 rounded-xl;
+
+      &.assistant {
+        @apply bg-dark-400/70 text-white/90 border border-white/5;
+      }
+
+      &.user {
+        @apply bg-green-400/20 text-white/90 ml-auto border border-green-400/30;
+      }
+    }
+
+    .chat-input {
+      @apply flex flex-col sm:flex-row gap-3;
+
+      input {
+        @apply flex-1 bg-dark-700/70 rounded-xl px-4 py-3 text-sm text-white/90 border border-white/10 focus:outline-none focus:border-green-400/60;
+      }
+
+      button {
+        @apply rounded-xl px-6 py-3 text-sm font-semibold bg-green-500 text-dark-900 disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_18px_rgba(118,218,68,0.35)];
+      }
+    }
+
+    .chat-error {
+      @apply text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2;
+    }
+  }
+
   #categories-fallback {
-    @apply pt-8 mt-5 w-full bg-dark-500 rounded-xl overflow-hidden;
+    @apply pt-8 mt-5 w-full bg-dark-500/90 rounded-xl overflow-hidden border border-white/5 shadow-[0_20px_40px_-30px_rgba(0,0,0,0.8)];
 
     h4 {
       @apply text-xl md:text-2xl font-semibold mb-2 pl-5;
@@ -412,7 +481,7 @@
   }
 
   #coin-overview-fallback {
-    @apply w-full h-full xl:col-span-2 px-2 bg-dark-500 rounded-xl;
+    @apply w-full h-full xl:col-span-2 px-2 bg-dark-500/90 rounded-xl border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
     .header {
       @apply flex-1 mb-2 flex gap-2 md:gap-3;
@@ -448,14 +517,14 @@
   }
 
   #trending-coins-fallback {
-    @apply w-full flex flex-col justify-center h-full py-4 bg-dark-500 rounded-xl;
+    @apply w-full flex flex-col justify-center h-full py-4 bg-dark-500/90 rounded-xl border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
     h4 {
       @apply text-xl md:text-2xl font-semibold mb-2 px-5;
     }
 
     .trending-coins-table {
-      @apply bg-dark-500 overflow-hidden;
+      @apply bg-dark-500/90 overflow-hidden border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
       .name-cell {
         @apply font-bold;
@@ -519,7 +588,7 @@
     }
 
     .exchange-table {
-      @apply bg-dark-500 rounded-xl overflow-hidden mt-5;
+      @apply bg-dark-500/90 rounded-xl overflow-hidden mt-5 border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
       .exchange-name {
         @apply text-green-500 font-bold;
@@ -557,7 +626,7 @@
         @apply rounded-lg grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 gap-3 sm:gap-5;
 
         li {
-          @apply text-base bg-dark-500 px-5 py-6 rounded-lg flex flex-col gap-3;
+          @apply text-base bg-dark-500/90 px-5 py-6 rounded-xl flex flex-col gap-3 border border-white/5;
 
           .label {
             @apply text-purple-100;
@@ -567,6 +636,136 @@
             @apply flex items-center text-green-500 gap-1;
           }
         }
+      }
+    }
+
+    .ai-insights {
+      @apply w-full mt-8 space-y-5;
+
+      .section-header {
+        @apply flex items-start justify-between gap-4;
+
+        h4 {
+          @apply text-xl md:text-2xl font-semibold;
+        }
+
+        .subtitle {
+          @apply text-sm text-purple-100/70 mt-1;
+        }
+
+        .badge {
+          @apply text-xs uppercase tracking-widest text-green-400 border border-green-400/40 rounded-full px-3 py-1;
+        }
+      }
+
+      .label {
+        @apply text-xs uppercase tracking-widest text-purple-100/70;
+      }
+
+      .news {
+        @apply bg-dark-500/90 rounded-xl px-5 py-4 border border-white/5 shadow-[0_12px_28px_-20px_rgba(0,0,0,0.7)];
+
+        ul {
+          @apply mt-3 space-y-2;
+
+          li {
+            @apply text-sm flex items-start justify-between gap-3;
+          }
+
+          a {
+            @apply text-green-400 hover:underline;
+          }
+
+          .source {
+            @apply text-xs text-purple-100/50 whitespace-nowrap mt-0.5;
+          }
+        }
+      }
+    }
+
+    @media (max-width: 640px) {
+      .ai-insights {
+        .section-header {
+          @apply flex-col;
+        }
+
+        .news ul li {
+          @apply flex-col items-start;
+        }
+      }
+    }
+
+    .ai-insights {
+      .text-sm.opacity-60 {
+        @apply text-purple-100/60;
+      }
+    }
+
+    .ai-insights {
+      .news a {
+        @apply leading-snug;
+      }
+    }
+
+    .ai-insights {
+      .news ul li a {
+        @apply flex-1;
+      }
+    }
+
+    .ai-insights {
+      .news .label {
+        @apply text-purple-100/80;
+      }
+    }
+
+    .ai-insights {
+      .news .source {
+        @apply pl-0;
+      }
+    }
+
+    .ai-insights {
+      .badge {
+        @apply self-start;
+      }
+    }
+
+    .ai-insights {
+      .news {
+        @apply border-white/10;
+      }
+    }
+
+    .ai-insights {
+      .news ul li a {
+        @apply text-white/90;
+      }
+
+      .news ul li a:hover {
+        @apply text-green-300;
+      }
+    }
+
+    .ai-insights {
+      .news ul li .source {
+        @apply uppercase tracking-widest;
+      }
+    }
+
+    .ai-insights {
+      .news {
+        @apply bg-dark-500/90;
+      }
+    }
+
+    .ai-insights {
+      .news ul li {
+        @apply border-b border-white/5 pb-2;
+      }
+
+      .news ul li:last-child {
+        @apply border-b-0 pb-0;
       }
     }
   }
@@ -583,7 +782,7 @@
     }
 
     .coins-table {
-      @apply bg-dark-500 rounded-xl max-h-fit overflow-hidden;
+      @apply bg-dark-500/90 rounded-xl max-h-fit overflow-hidden border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
       .rank-cell {
         @apply pl-5 max-w-20! py-5 font-medium text-purple-100;
@@ -625,48 +824,105 @@
 
   #search-modal {
     .trigger {
-      @apply px-6 hover:bg-transparent! font-medium transition-all h-full cursor-pointer text-base text-purple-100 flex items-center gap-2;
-    }
+      @apply h-11 px-5 md:px-6 rounded-2xl border border-white/15 text-sm md:text-base font-medium text-white/90 flex items-center gap-3 transition-all duration-300 cursor-pointer;
+      background: linear-gradient(135deg, rgba(26, 32, 39, 0.85) 0%, rgba(15, 19, 22, 0.95) 100%);
+      backdrop-filter: blur(12px);
+      box-shadow:
+        0 4px 20px -8px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 
-    .kbd {
-      @apply pointer-events-none hidden sm:inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100;
-    }
+      &:hover {
+        @apply border-green-400/50 text-white;
+        background: linear-gradient(135deg, rgba(30, 40, 51, 0.9) 0%, rgba(20, 25, 30, 0.98) 100%);
+        box-shadow:
+          0 8px 30px -10px rgba(118, 218, 68, 0.25),
+          0 0 0 1px rgba(118, 218, 68, 0.15),
+          inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        transform: translateY(-1px);
+      }
 
-    .dialog {
-      @apply bg-dark-400! max-w-sm sm:max-w-md md:max-w-2xl mx-auto;
-    }
-
-    .cmd-input {
-      @apply bg-dark-500!;
-
-      input {
-        @apply placeholder:text-purple-100!;
+      &:active {
+        transform: translateY(0);
       }
     }
 
-    .list {
-      @apply bg-dark-500 max-h-100;
+    .kbd {
+      @apply pointer-events-none hidden sm:inline-flex h-6 select-none items-center gap-1 rounded-lg border border-white/20 bg-dark-400/60 px-2 font-mono text-[11px] font-medium text-purple-100/90;
+      box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
-    .heading {
-      @apply flex items-center gap-2 text-purple-100;
+    .search-overlay {
+      @apply fixed inset-0 bg-black/70 backdrop-blur-md flex items-start justify-center px-4 pt-20;
+      z-index: 1000;
     }
 
-    .group {
-      @apply bg-dark-500 text-purple-100;
+    .search-dialog {
+      @apply w-full max-w-3xl rounded-[28px] border border-white/10 shadow-[0_40px_120px_-45px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-2xl;
+      background:
+        radial-gradient(120% 140% at 10% 0%, rgba(88, 216, 150, 0.2) 0%, rgba(24, 28, 34, 0.95) 45%, rgba(12, 15, 18, 0.98) 100%),
+        linear-gradient(180deg, rgba(20, 24, 28, 0.95) 0%, rgba(12, 15, 18, 0.98) 100%);
+    }
+
+    .search-header {
+      @apply flex items-center justify-between gap-6 px-7 pt-7 pb-5 border-b border-white/10;
+
+      h3 {
+        @apply text-xl md:text-2xl font-semibold text-white tracking-tight;
+      }
+
+      p {
+        @apply text-sm text-purple-100/70 mt-1;
+      }
+
+      .close {
+        @apply flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-purple-100/80 border border-white/10 rounded-full px-3 py-1.5 hover:border-white/30 hover:text-white transition-all;
+
+        kbd {
+          @apply rounded-md border border-white/10 bg-dark-700/70 px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-purple-100/70;
+        }
+      }
+    }
+
+    .search-input {
+      @apply px-7 py-4 flex items-center gap-3;
+
+      .search-icon {
+        @apply size-9 rounded-2xl bg-dark-700/70 border border-white/10 text-purple-100/70 flex items-center justify-center shrink-0;
+
+        svg {
+          @apply size-4;
+        }
+      }
+
+      input {
+        @apply w-full bg-dark-700/60 border border-white/10 rounded-2xl px-5 py-4 text-base text-white/90 placeholder:text-purple-100/60 outline-none focus:border-green-400/60;
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 12px 30px rgba(0, 0, 0, 0.22);
+      }
+    }
+
+    .search-results {
+      @apply max-h-[24rem] overflow-y-auto px-3 pb-2;
     }
   }
 
-  .dialog {
+  #search-modal {
     .empty {
       @apply py-6 text-center text-sm text-gray-400;
     }
 
     .search-item {
-      @apply grid grid-cols-4 gap-4 items-center justify-between data-[selected=true]:bg-dark-400 transition-all !cursor-pointer hover:bg-dark-400 py-3;
+      @apply grid grid-cols-4 gap-4 items-center justify-between transition-all !cursor-pointer px-4 py-3 rounded-2xl mx-2;
+      border: 1px solid transparent;
+
+      &:hover {
+        border-color: rgba(118, 218, 68, 0.25);
+        background: linear-gradient(90deg, rgba(118, 218, 68, 0.12), rgba(12, 15, 18, 0.15));
+      }
 
       .coin-info {
-        @apply flex gap-4 items-center col-span-2;
+        @apply flex gap-4 items-center col-span-3;
 
         img {
           @apply size-9 rounded-full;
@@ -681,12 +937,131 @@
         }
       }
 
-      .coin-price {
-        @apply font-semibold text-sm lg:text-base;
+      .coin-rank {
+        @apply text-sm text-purple-100/70 text-right;
+      }
+    }
+
+    .coin-fallback {
+      @apply size-9 rounded-full bg-dark-400/70;
+    }
+
+    .search-footer {
+      @apply px-7 py-4 text-xs text-purple-100/70 border-t border-white/5 flex items-center justify-end gap-3;
+
+      .hint {
+        @apply inline-flex items-center gap-2;
+
+        kbd {
+          @apply rounded-md border border-white/10 bg-dark-700/70 px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-purple-100/70;
+        }
+
+        span {
+          @apply text-purple-100/70;
+        }
+      }
+    }
+  }
+
+  .search-overlay {
+    @apply fixed inset-0 bg-black/70 backdrop-blur-md flex items-start justify-center px-4 pt-20;
+    z-index: 1000;
+  }
+
+  .search-dialog {
+    @apply w-full max-w-3xl rounded-[28px] border border-white/10 shadow-[0_40px_120px_-45px_rgba(0,0,0,0.9)] overflow-hidden backdrop-blur-2xl;
+    background:
+      radial-gradient(120% 140% at 10% 0%, rgba(88, 216, 150, 0.2) 0%, rgba(24, 28, 34, 0.95) 45%, rgba(12, 15, 18, 0.98) 100%),
+      linear-gradient(180deg, rgba(20, 24, 28, 0.95) 0%, rgba(12, 15, 18, 0.98) 100%);
+  }
+
+  .search-header {
+    @apply flex items-center justify-between gap-6 px-7 pt-7 pb-5 border-b border-white/10;
+
+    h3 {
+      @apply text-xl md:text-2xl font-semibold text-white tracking-tight;
+    }
+
+    p {
+      @apply text-sm text-purple-100/70 mt-1;
+    }
+
+    .close {
+      @apply flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-purple-100/80 border border-white/10 rounded-full px-3 py-1.5 hover:border-white/30 hover:text-white transition-all;
+
+      kbd {
+        @apply rounded-md border border-white/10 bg-dark-700/70 px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-purple-100/70;
+      }
+    }
+  }
+
+  .search-input {
+    @apply px-7 py-4 flex items-center gap-3;
+
+    .search-icon {
+      @apply size-9 rounded-2xl bg-dark-700/70 border border-white/10 text-purple-100/70 flex items-center justify-center shrink-0;
+
+      svg {
+        @apply size-4 block;
+      }
+    }
+
+    input {
+      @apply w-full bg-dark-700/60 border border-white/10 rounded-2xl px-5 py-4 text-base text-white/90 placeholder:text-purple-100/60 outline-none focus:border-green-400/60;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03), 0 12px 30px rgba(0, 0, 0, 0.22);
+    }
+  }
+
+  .search-results {
+    @apply max-h-[24rem] overflow-y-auto px-3 pb-2;
+  }
+
+  .search-item {
+    @apply grid grid-cols-4 gap-4 items-center justify-between transition-all !cursor-pointer px-4 py-3 rounded-2xl mx-2;
+    border: 1px solid transparent;
+
+    &:hover {
+      border-color: rgba(118, 218, 68, 0.25);
+      background: linear-gradient(90deg, rgba(118, 218, 68, 0.12), rgba(12, 15, 18, 0.15));
+    }
+
+    .coin-info {
+      @apply flex gap-4 items-center col-span-3;
+
+      img {
+        @apply size-9 rounded-full;
       }
 
-      .coin-change {
-        @apply flex gap-1 text-sm lg:text-base items-center font-medium;
+      div {
+        @apply flex flex-col;
+      }
+
+      .coin-symbol {
+        @apply text-sm text-purple-100 uppercase;
+      }
+    }
+
+    .coin-rank {
+      @apply text-sm text-purple-100/70 text-right;
+    }
+  }
+
+  .coin-fallback {
+    @apply size-9 rounded-full bg-dark-400/70;
+  }
+
+  .search-footer {
+    @apply px-7 py-4 text-xs text-purple-100/70 border-t border-white/5 flex items-center justify-end gap-3;
+
+    .hint {
+      @apply inline-flex items-center gap-2;
+
+      kbd {
+        @apply rounded-md border border-white/10 bg-dark-700/70 px-2 py-1 font-mono text-[10px] tracking-[0.12em] text-purple-100/70;
+      }
+
+      span {
+        @apply text-purple-100/70;
       }
     }
   }
@@ -812,7 +1187,7 @@
   }
 
   #coin-overview {
-    @apply w-full h-full xl:col-span-2 px-2 bg-dark-500 rounded-xl;
+    @apply w-full h-full xl:col-span-2 px-2 bg-dark-500/90 rounded-xl border border-white/5 shadow-[0_18px_36px_-30px_rgba(0,0,0,0.8)];
 
     .header {
       @apply flex-1 mb-2 flex gap-2 md:gap-3;
@@ -874,6 +1249,86 @@
       .page-link-active {
         @apply bg-green-500! text-dark-900 font-semibold;
       }
+    }
+  }
+
+  .auth-page {
+    @apply min-h-screen flex items-start sm:items-center justify-center px-4 py-10 sm:py-12;
+  }
+
+  .auth-wrapper {
+    @apply w-full max-w-md sm:max-w-xl;
+  }
+
+  .auth-card {
+    @apply bg-dark-500/90 border border-white/10 rounded-2xl sm:rounded-3xl p-6 sm:p-10 shadow-[0_40px_80px_-50px_rgba(0,0,0,0.9)] space-y-6;
+  }
+
+  .auth-header {
+    @apply flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-center sm:text-left;
+
+    h1 {
+      @apply text-2xl md:text-3xl font-semibold;
+    }
+
+    p {
+      @apply text-sm text-purple-100/70 mt-2;
+    }
+  }
+
+  .auth-tabs {
+    @apply flex items-center gap-2 bg-dark-700/70 border border-white/10 rounded-full p-1;
+
+    button {
+      @apply px-4 py-2 rounded-full text-sm text-purple-100/80 transition-all;
+    }
+
+    .active {
+      @apply bg-green-500 text-dark-900 font-semibold shadow-[0_0_18px_rgba(118,218,68,0.25)];
+    }
+  }
+
+  .auth-card form {
+    @apply space-y-4;
+
+    label {
+      @apply flex flex-col text-sm text-purple-100/80 gap-2;
+    }
+
+    input {
+      @apply bg-dark-700/70 border border-white/10 rounded-xl px-4 py-3 text-sm text-white/90 focus:outline-none focus:border-green-400/60;
+    }
+
+    button {
+      @apply w-full bg-green-500 text-dark-900 rounded-xl py-3 font-semibold shadow-[0_0_20px_rgba(118,218,68,0.35)];
+    }
+  }
+
+  .auth-error {
+    @apply text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2;
+  }
+
+  .auth-note {
+    @apply text-sm text-green-300 bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2;
+  }
+
+  .auth-link {
+    @apply w-full text-sm text-purple-100/80 underline underline-offset-4 decoration-purple-100/40 bg-transparent shadow-none;
+  }
+
+  .auth-providers {
+    @apply mt-5 sm:mt-6 space-y-2 sm:space-y-3;
+  }
+
+  .auth-provider {
+    @apply w-full flex items-center justify-center gap-3 rounded-xl border border-white/10 bg-dark-700/60 px-5 py-3.5 text-base sm:text-sm font-semibold text-white/90 transition-all hover:border-green-400/40 hover:bg-dark-500/80;
+  }
+
+  .auth-provider-icon {
+    @apply size-5 sm:size-6 rounded-full border border-white/10 bg-dark-400/80 flex items-center justify-center;
+
+    svg {
+      @apply size-4 sm:size-5;
     }
   }
 

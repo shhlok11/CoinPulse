@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { cn, formatPercentage, formatCurrency } from '@/lib/utils';
 import DataTable from '@/components/DataTable';
 import CoinsPagination from '@/components/CoinsPagination';
+import MotionSection from '@/components/MotionSection';
 
 const Coins = async ({ searchParams }: NextPageProps) => {
   const { page } = await searchParams;
@@ -81,7 +82,7 @@ const Coins = async ({ searchParams }: NextPageProps) => {
 
   return (
     <main id="coins-page">
-      <div className="content">
+      <MotionSection className="content" delay={0.1}>
         <h4>All Coins</h4>
 
         <DataTable
@@ -96,7 +97,7 @@ const Coins = async ({ searchParams }: NextPageProps) => {
           totalPages={estimatedTotalPages}
           hasMorePages={hasMorePages}
         />
-      </div>
+      </MotionSection>
     </main>
   );
 };

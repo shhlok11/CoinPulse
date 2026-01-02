@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { fetcher, getPools } from '@/lib/coingecko.actions';
 import Link from 'next/link';
 import { ArrowUpRight } from 'lucide-react';
 import { formatCurrency } from '@/lib/utils';
 import LiveDataWrapper from '@/components/LiveDataWrapper';
 import Converter from '@/components/Converter';
+import AiInsights from '@/components/AiInsights';
+import MotionSection from '@/components/MotionSection';
 
 const Page = async ({ params }: NextPageProps) => {
   const { id } = await params;
@@ -16,7 +18,6 @@ const Page = async ({ params }: NextPageProps) => {
     fetcher<OHLCData>(`/coins/${id}/ohlc`, {
       vs_currency: 'usd',
       days: 1,
-      interval: 'hourly',
       precision: 'full',
     }),
   ]);
@@ -64,13 +65,13 @@ const Page = async ({ params }: NextPageProps) => {
 
   return (
     <main id="coin-details-page">
-      <section className="primary">
+      <MotionSection className="primary" delay={0.05}>
         <LiveDataWrapper coinId={id} poolId={pool.id} coin={coinData} coinOHLCData={coinOHLCData}>
           <h4>Exchange Listings</h4>
         </LiveDataWrapper>
-      </section>
+      </MotionSection>
 
-      <section className="secondary">
+      <MotionSection className="secondary" delay={0.1}>
         <Converter
           symbol={coinData.symbol}
           icon={coinData.image.small}
@@ -99,7 +100,18 @@ const Page = async ({ params }: NextPageProps) => {
             ))}
           </ul>
         </div>
-      </section>
+
+        <Suspense
+          fallback={
+            <section className="ai-insights">
+              <h4>AI Insights</h4>
+              <p>Loading insights...</p>
+            </section>
+          }
+        >
+          <AiInsights name={coinData.name} symbol={coinData.symbol} />
+        </Suspense>
+      </MotionSection>
     </main>
   );
 };

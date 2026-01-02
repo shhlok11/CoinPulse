@@ -5,6 +5,7 @@ import { cn, formatCurrency, formatPercentage } from '@/lib/utils';
 import { TrendingDown, TrendingUp } from 'lucide-react';
 import DataTable from '@/components/DataTable';
 import { TrendingCoinsFallback } from './fallback';
+import MotionSection from '@/components/MotionSection';
 
 const TrendingCoins = async () => {
   let trendingCoins;
@@ -60,18 +61,20 @@ const TrendingCoins = async () => {
   ];
 
   return (
-    <div id="trending-coins">
-      <h4>Trending Coins</h4>
+    <MotionSection className="w-full" delay={0.15}>
+      <div id="trending-coins">
+        <h4>Trending Coins</h4>
 
-      <DataTable
-        data={trendingCoins.coins.slice(0, 6) || []}
-        columns={columns}
-        rowKey={(coin) => coin.item.id}
-        tableClassName="trending-coins-table"
-        headerCellClassName="py-3!"
-        bodyCellClassName="py-2!"
-      />
-    </div>
+        <DataTable
+          data={trendingCoins.coins.slice(0, 6) || []}
+          columns={columns}
+          rowKey={(coin) => coin.item.id}
+          tableClassName="trending-coins-table"
+          headerCellClassName="py-3!"
+          bodyCellClassName="py-2!"
+        />
+      </div>
+    </MotionSection>
   );
 };
 
