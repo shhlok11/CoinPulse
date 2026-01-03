@@ -39,7 +39,7 @@ export const auth = betterAuth({
         {
           providerId: 'github',
           authorizationUrl: 'https://github.com/login/oauth/authorize',
-          tokenUrl: 'https://github.com/login/oauth/access_token',
+          tokenUrl: 'https://github.com/login/oauth/access_token?accept=json',
           clientId: process.env.GITHUB_CLIENT_ID || '',
           clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
           scopes: ['read:user', 'user:email'],
