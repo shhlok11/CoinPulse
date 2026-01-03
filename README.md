@@ -111,28 +111,7 @@ Install the project dependencies using npm:
 npm install
 ```
 
-**Set Up Environment Variables**
 
-Create a new file named `.env` in the root of your project and add the following content:
-
-```env
-COINGECKO_BASE_URL=https://pro-api.coingecko.com/api/v3
-COINGECKO_API_KEY=
-
-NEXT_PUBLIC_COINGECKO_WEBSOCKET_URL=
-NEXT_PUBLIC_COINGECKO_API_KEY=
-
-NEWS_API_KEY=
-NEWS_API_BASE_URL=https://gnews.io/api/v4/search
-GEMINI_API_KEY=
-GEMINI_MODEL=gemini-2.0-flash
-GEMINI_API_BASE_URL=https://generativelanguage.googleapis.com/v1
-DATABASE_URL=
-BETTER_AUTH_URL=http://localhost:3000
-BETTER_AUTH_SECRET=
-```
-
-Replace the placeholder values with your real credentials. You can get these by signing up at: [**Example**](https://jsm.dev/example).
 
 **Running the Project**
 
