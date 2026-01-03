@@ -46,9 +46,11 @@ export const auth = betterAuth({
           pkce: false,
           async getUserInfo(tokens) {
             const accessToken =
-              tokens.accessToken || (tokens as { access_token?: string }).access_token;
+              tokens.accessToken ||
+              (tokens as { access_token?: string }).access_token ||
+              (tokens as { token?: string }).token;
             if (!accessToken) {
-              console.error('[auth] Missing GitHub access token');
+              console.error('[auth] Missing GitHub access token', tokens);
               return null;
             }
             const headers = {
