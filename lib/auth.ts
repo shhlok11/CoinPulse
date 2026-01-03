@@ -45,9 +45,14 @@ export const auth = betterAuth({
           scopes: ['read:user', 'user:email'],
           pkce: true,
           async getUserInfo(tokens) {
-            if (!tokens.accessToken) return null;
+            const accessToken =
+              tokens.accessToken || (tokens as { access_token?: string }).access_token;
+            if (!accessToken) {
+              console.error('[auth] Missing GitHub access token');
+              return null;
+            }
             const headers = {
-              Authorization: `Bearer ${tokens.accessToken}`,
+              Authorization: `Bearer ${accessToken}`,
               'User-Agent': 'coinpulse',
               Accept: 'application/vnd.github+json',
             };
