@@ -28,6 +28,7 @@ model Account {
   accessToken           String?
   refreshToken          String?
   idToken               String?
+  expiresAt             DateTime?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
   scope                 String?
