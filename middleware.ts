@@ -3,12 +3,10 @@ import { NextResponse } from 'next/server';
 
 const isSessionCookiePresent = (request: NextRequest) =>
   request.cookies.getAll().some(
-    ({ name }) =>
-      name.endsWith('better-auth.session-token') ||
-      name.endsWith('__Secure-better-auth.session-token'),
+    ({ name }) => name.includes('better-auth') && name.includes('session'),
   );
 
-const publicPaths = ['/', '/login', '/coins'];
+const publicPaths = ['/login'];
 
 const isPublicPath = (pathname: string) =>
   publicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
