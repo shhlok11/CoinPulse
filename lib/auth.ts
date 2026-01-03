@@ -43,7 +43,7 @@ export const auth = betterAuth({
           clientId: process.env.GITHUB_CLIENT_ID || '',
           clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
           scopes: ['read:user', 'user:email'],
-          pkce: true,
+          pkce: false,
           async getUserInfo(tokens) {
             const accessToken =
               tokens.accessToken || (tokens as { access_token?: string }).access_token;
