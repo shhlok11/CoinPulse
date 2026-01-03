@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Github } from "lucide-react";
 import toast from "react-hot-toast";
+import { getCallbackUrl } from "@/lib/callback-url";
 
 const GoogleIcon = () => (
   <svg viewBox="0 0 48 48" aria-hidden="true">
@@ -43,10 +44,11 @@ const SocialAuth = () => {
 
     try {
       window.localStorage.setItem("auth:pending", "1");
+      const callbackURL = getCallbackUrl();
       const response = await fetch("/api/auth/sign-in/social", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider, callbackURL: "/" }),
+        body: JSON.stringify({ provider, callbackURL }),
       });
 
       if (!response.ok) {

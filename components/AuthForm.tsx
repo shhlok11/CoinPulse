@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { getCallbackUrl } from "@/lib/callback-url";
 
 type Mode = "sign-in" | "sign-up";
 
@@ -29,10 +30,11 @@ const AuthForm = () => {
           ? { email, password, name }
           : { email, password };
 
+      const callbackURL = getCallbackUrl();
       const response = await fetch(`/api/auth/${mode === "sign-up" ? "sign-up" : "sign-in"}/email`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ ...payload, callbackURL }),
       });
 
       if (!response.ok) {
@@ -65,10 +67,11 @@ const AuthForm = () => {
     setNotice(null);
 
     try {
+      const callbackURL = getCallbackUrl();
       const response = await fetch("/api/auth/send-verification-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, callbackURL: "/" }),
+        body: JSON.stringify({ email, callbackURL }),
       });
 
       if (!response.ok) {
