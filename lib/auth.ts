@@ -1,4 +1,5 @@
-import { betterAuth, genericOAuth } from 'better-auth';
+import { betterAuth } from 'better-auth';
+import { genericOAuth } from 'better-auth/plugins';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { prisma } from '@/lib/prisma';
 
