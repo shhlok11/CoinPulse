@@ -1,29 +1,35 @@
-import MotionSection from '@/components/MotionSection';
-import Link from 'next/link';
+import React, { Suspense } from 'react';
+import CoinOverview from '@/components/home/CoinOverview';
+import TrendingCoins from '@/components/home/TrendingCoins';
+import {
+  CategoriesFallback,
+  CoinOverviewFallback,
+  TrendingCoinsFallback,
+} from '@/components/home/fallback';
+import Categories from '@/components/home/Categories';
+import CryptoChatbot from '@/components/CryptoChatbot';
 
-const page = () => {
+const Page = async () => {
   return (
     <main className="main-container">
-      <MotionSection className="space-y-4" delay={0.05}>
-        <p className="badge badge-up">Live market pulse</p>
-        <h1 className="text-4xl sm:text-5xl font-semibold text-white">
-          CoinPulse Dashboard
-        </h1>
-        <p className="max-w-2xl text-purple-100">
-          Track price shifts, market caps, and coin momentum in one terminal-like
-          view. Use search to jump to any asset instantly.
-        </p>
-        <div className="flex flex-wrap gap-3">
-          <Link className="auth-provider" href="/coins">
-            Explore all coins
-          </Link>
-          <Link className="auth-link" href="/coins/bitcoin">
-            View Bitcoin
-          </Link>
-        </div>
-      </MotionSection>
+      <CryptoChatbot />
+      <section className="home-grid">
+        <Suspense fallback={<CoinOverviewFallback />}>
+          <CoinOverview />
+        </Suspense>
+
+        <Suspense fallback={<TrendingCoinsFallback />}>
+          <TrendingCoins />
+        </Suspense>
+      </section>
+
+      <section className="w-full mt-7 space-y-4">
+        <Suspense fallback={<CategoriesFallback />}>
+          <Categories />
+        </Suspense>
+      </section>
     </main>
   );
 };
 
-export default page
+export default Page;
