@@ -45,10 +45,16 @@ const SocialAuth = () => {
     try {
       window.localStorage.setItem("auth:pending", "1");
       const callbackURL = getCallbackUrl();
-      const response = await fetch("/api/auth/sign-in/social", {
+      const endpoint =
+        provider === "github" ? "/api/auth/sign-in/oauth2" : "/api/auth/sign-in/social";
+      const payload =
+        provider === "github"
+          ? { providerId: provider, callbackURL }
+          : { provider, callbackURL };
+      const response = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ provider, callbackURL }),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {

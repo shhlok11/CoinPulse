@@ -1,4 +1,4 @@
-import { betterAuth } from 'better-auth';
+import { betterAuth, genericOAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
 import { prisma } from '@/lib/prisma';
 
@@ -31,11 +31,76 @@ export const auth = betterAuth({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     },
-    github: {
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      scope: ['read:user', 'user:email'],
-    },
   },
+  plugins: [
+    genericOAuth({
+      config: [
+        {
+          providerId: 'github',
+          authorizationUrl: 'https://github.com/login/oauth/authorize',
+          tokenUrl: 'https://github.com/login/oauth/access_token',
+          clientId: process.env.GITHUB_CLIENT_ID || '',
+          clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+          scopes: ['read:user', 'user:email'],
+          pkce: true,
+          async getUserInfo(tokens) {
+            if (!tokens.accessToken) return null;
+            const headers = {
+              Authorization: `Bearer ${tokens.accessToken}`,
+              'User-Agent': 'coinpulse',
+              Accept: 'application/vnd.github+json',
+            };
+
+            const userResponse = await fetch('https://api.github.com/user', {
+              headers,
+            });
+            if (!userResponse.ok) return null;
+            const userData = (await userResponse.json()) as {
+              id: number;
+              login?: string;
+              name?: string | null;
+              email?: string | null;
+              avatar_url?: string | null;
+            };
+
+            let email = userData.email ?? undefined;
+            let emailVerified = false;
+
+            if (!email) {
+              const emailsResponse = await fetch('https://api.github.com/user/emails', {
+                headers,
+              });
+              if (emailsResponse.ok) {
+                const emails = (await emailsResponse.json()) as Array<{
+                  email: string;
+                  primary?: boolean;
+                  verified?: boolean;
+                }>;
+                const primary = emails.find((entry) => entry.primary) ?? emails[0];
+                if (primary?.email) {
+                  email = primary.email;
+                  emailVerified = Boolean(primary.verified);
+                }
+              }
+            } else {
+              emailVerified = true;
+            }
+
+            const login = userData.login ?? 'github-user';
+            const name = userData.name ?? login;
+            const safeEmail = email ?? `${login}@users.noreply.github.com`;
+
+            return {
+              id: String(userData.id),
+              name,
+              email: safeEmail,
+              emailVerified,
+              image: userData.avatar_url ?? undefined,
+            };
+          },
+        },
+      ],
+    }),
+  ],
   trustedOrigins: uniqueTrustedOrigins,
 });
