@@ -4,12 +4,18 @@ import { NextResponse } from 'next/server';
 const isSessionCookiePresent = (request: NextRequest) =>
   request.cookies.getAll().some(({ name }) => name.endsWith('session_token'));
 
+const publicPaths = ['/', '/login', '/coins'];
+
+const isPublicPath = (pathname: string) =>
+  publicPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`));
+
 export const middleware = (request: NextRequest) => {
   const { pathname } = request.nextUrl;
   const hasSession = isSessionCookiePresent(request);
   const isLoginRoute = pathname === '/login';
+  const isPublicRoute = isPublicPath(pathname);
 
-  if (!hasSession && !isLoginRoute) {
+  if (!hasSession && !isPublicRoute) {
     const loginUrl = new URL('/login', request.url);
     return NextResponse.redirect(loginUrl);
   }
